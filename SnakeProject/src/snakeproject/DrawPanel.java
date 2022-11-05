@@ -24,7 +24,7 @@ public class DrawPanel extends javax.swing.JPanel {
     public DrawPanel() {
         initComponents();
         timer = new Timer();
-        timer.scheduleAtFixedRate(new RemindTask(this), 1000, 5);
+        timer.scheduleAtFixedRate(new RemindTask(this), 1000, 20);
         setSize(new Dimension(800, 800));
 
         ranX = Math.random() * this.getWidth();
@@ -39,6 +39,7 @@ public class DrawPanel extends javax.swing.JPanel {
         KeyboardFocusManager keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyManager.addKeyEventPostProcessor(new Keypoard_Events(this));
         repaint();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -82,6 +83,7 @@ public class DrawPanel extends javax.swing.JPanel {
     public Food getFood() {
         return food;
     }
+    SnakeBody temp3 = snakeBody;
 
     class RemindTask extends TimerTask {
 
@@ -93,49 +95,56 @@ public class DrawPanel extends javax.swing.JPanel {
         }
 
         public void run() {
+
             if (counter == snakeBodyLength.size()) {
                 counter = 0;
             }
             eatFood();
             if (snakeBody.isMoveLeft()) {
-                for (int i = 0; i < snakeBodyLength.size(); i++) {
-
-                    snakeBodyLength.get(i).getP1().x -= 1;
-                }
-                //   snakeBody.getP1().x -= 1;
+//                for (int i = 0; i < snakeBodyLength.size(); i++) {
+//
+//                    snakeBodyLength.get(i).getP1().x -= 1;
+//                }
+                snakeBody.getP1().x -= 1;
                 if (snakeBody.getP1().x < 0) {
 
                     snakeBody.getP1().x = drawPanel.getWidth();
                 }
+                moveAllBody(counter);
             } else if (snakeBody.isMoveRight()) {
-                for (int i = 0; i < snakeBodyLength.size(); i++) {
-                    snakeBodyLength.get(i).getP1().x += 1;
-                }
+//                for (int i = 0; i < snakeBodyLength.size(); i++) {
+//                    snakeBodyLength.get(i).getP1().x += 1;
+//                }
 
-                //  snakeBody.getP1().x += 1;
+                snakeBody.getP1().x += 1;
                 if (snakeBody.getP1().x > drawPanel.getWidth()) {
                     snakeBody.getP1().x = 0;
                 }
+                moveAllBody(counter);
             } else if (snakeBody.isMoveUP()) {
-                for (int i = 0; i < snakeBodyLength.size(); i++) {
-                    snakeBodyLength.get(i).getP1().y -= 1;
-                }
+//                for (int i = 0; i < snakeBodyLength.size(); i++) {
+//                    snakeBodyLength.get(i).getP1().y -= 1;
+//                }
 
-                //   snakeBody.getP1().y -= 1;
+                snakeBody.getP1().y -= 1;
                 if (snakeBody.getP1().y < 0) {
                     snakeBody.getP1().y = drawPanel.getHeight();
                 }
+                moveAllBody(counter);
             } else if (snakeBody.isMoveDown()) {
-                for (int i = 0; i < snakeBodyLength.size(); i++) {
-                    snakeBodyLength.get(i).getP1().y += 1;
-                }
+//                for (int i = 0; i < snakeBodyLength.size(); i++) {
+//                    snakeBodyLength.get(i).getP1().y += 1;
+//                }
 
-                // snakeBody.getP1().y += 1;
+                snakeBody.getP1().y += 1;
                 if (snakeBody.getP1().y > drawPanel.getHeight()) {
                     snakeBody.getP1().y = 0;
                 }
+                moveAllBody(counter);
             }
+//            System.out.println("Mohaedm");
             counter++;
+
             repaint();
         }
     }
@@ -145,6 +154,63 @@ public class DrawPanel extends javax.swing.JPanel {
         ranY = Math.random() * this.getHeight();
         food.setP1(new Point((int) ranX, (int) ranY));
         modifySnakeBody();
+    }
+
+    public void moveAllBody(int counter) {
+        SnakeBody temp1 = temp3;
+        try {
+            temp1 = (SnakeBody) temp3.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SnakeBody temp2 = null;
+        for (int i = 1; i < snakeBodyLength.size(); i++) {
+            try {
+                temp2 = (SnakeBody) snakeBodyLength.get(i).clone();
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            snakeBodyLength.get(i).setMoveDown(temp1.isMoveDown());
+            snakeBodyLength.get(i).setMoveUP(temp1.isMoveUP());
+            snakeBodyLength.get(i).setMoveLeft(temp1.isMoveLeft());
+            snakeBodyLength.get(i).setMoveRight(temp1.isMoveRight());
+            if (temp1.isMoveDown()) {
+                snakeBodyLength.get(i).setP1(new Point(temp1.getP1().x, temp1.getP1().y - 40));
+            } else if (temp1.isMoveUP()) {
+                snakeBodyLength.get(i).setP1(new Point(temp1.getP1().x, temp1.getP1().y + 40));
+
+            } else if (temp1.isMoveLeft()) {
+                snakeBodyLength.get(i).setP1(new Point(temp1.getP1().x + 40, temp1.getP1().y));
+
+            } else if (temp1.isMoveRight()) {
+                snakeBodyLength.get(i).setP1(new Point(temp1.getP1().x - 40, temp1.getP1().y));
+
+            }
+            try {
+                temp1 = (SnakeBody) temp2.clone();
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//
+//            snakeBodyLength.get(i).setMoveDown(snakeBodyLength.get(i - 1).isMoveDown());
+//            snakeBodyLength.get(i).setMoveUP(snakeBodyLength.get(i - 1).isMoveUP());
+//            snakeBodyLength.get(i).setMoveLeft(snakeBodyLength.get(i - 1).isMoveLeft());
+//            snakeBodyLength.get(i).setMoveRight(snakeBodyLength.get(i - 1).isMoveRight());
+//            if (snakeBodyLength.get(snakeBodyLength.size() - 1).isMoveDown()) {
+//                snakeBodyLength.get(i).setP1(new Point(snakeBodyLength.get(i - 1).getP1().x, snakeBodyLength.get(i - 1).getP1().y - 40));
+//            } else if (snakeBodyLength.get(snakeBodyLength.size() - 1).isMoveUP()) {
+//                snakeBodyLength.get(i).setP1(new Point(snakeBodyLength.get(i - 1).getP1().x, snakeBodyLength.get(i - 1).getP1().y + 40));
+//
+//            } else if (snakeBodyLength.get(i - 1).isMoveLeft()) {
+//                snakeBodyLength.get(i).setP1(new Point(snakeBodyLength.get(i - 1).getP1().x + 40, snakeBodyLength.get(i - 1).getP1().y));
+//
+//            } else if (snakeBodyLength.get(snakeBodyLength.size() - 1).isMoveRight()) {
+//                snakeBodyLength.get(i).setP1(new Point(snakeBodyLength.get(i - 1).getP1().x - 40, snakeBodyLength.get(i - 1).getP1().y));
+//
+//            }
+
+        }
     }
 
     public void modifySnakeBody() {

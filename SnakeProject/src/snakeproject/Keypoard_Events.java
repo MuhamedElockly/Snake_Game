@@ -2,6 +2,8 @@ package snakeproject;
 
 import java.awt.KeyEventPostProcessor;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import snakeproject.DrawPanel;
 
 public class Keypoard_Events implements KeyEventPostProcessor {
@@ -14,6 +16,11 @@ public class Keypoard_Events implements KeyEventPostProcessor {
 
     @Override
     public boolean postProcessKeyEvent(KeyEvent e) {
+        try {
+            drawPanel.temp3 = (SnakeBody) drawPanel.snakeBodyLength.get(0).clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT && drawPanel.getSnakeBody().isMoveRight() == false) {
             drawPanel.getSnakeBody().setMoveLeft(true);
