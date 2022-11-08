@@ -16,7 +16,7 @@ public class Food {
     public void drawBody(Graphics g) {
 
         g.setColor(Color.GREEN);
-        g.fillOval(this.getP1().x, this.getP1().y, 30, 30);
+        g.fillOval(this.getP1().x, this.getP1().y, 40, 40);
 
     }
 

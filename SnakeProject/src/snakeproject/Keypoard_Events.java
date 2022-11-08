@@ -28,13 +28,7 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                 drawPanel.getSnakeBody().setMoveDown(false);
                 drawPanel.getSnakeBody().setMoveRight(false);
                 drawPanel.getSnakeBody().setMoveUP(false);
-                if (drawPanel.snakeBodyLength.size() > 1) {
-                    SnakeHeadDirection snakeDirection = new SnakeHeadDirection();
-                    snakeDirection.setPosation(drawPanel.snakeBody.getP1());
-//                    System.out.println("Direction Left : " + snakeDirection.getPosation());
-                    snakeDirection.setDirectionLeft(true);
-                    drawPanel.direction.add(snakeDirection);
-                }
+               
 
                 drawPanel.repaint();
             }
@@ -45,14 +39,7 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                 drawPanel.getSnakeBody().setMoveRight(false);
                 drawPanel.getSnakeBody().setMoveUP(true);
 
-                if (drawPanel.snakeBodyLength.size() > 1) {
-
-                    SnakeHeadDirection snakeDirection = new SnakeHeadDirection();
-                    snakeDirection.setPosation(drawPanel.snakeBody.getP1());
-//                    System.out.println("Direction Up : " + snakeDirection.getPosation());
-                    snakeDirection.setDirectionUp(true);
-                    drawPanel.direction.add(snakeDirection);
-                }
+                
             }
             drawPanel.repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN && drawPanel.getSnakeBody().isMoveUP() == false) {
@@ -62,13 +49,7 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                 drawPanel.getSnakeBody().setMoveRight(false);
                 drawPanel.getSnakeBody().setMoveUP(false);
 
-                if (e.getID() == KeyEvent.KEY_PRESSED) {
-                    SnakeHeadDirection snakeDirection = new SnakeHeadDirection();
-                    snakeDirection.setPosation(drawPanel.snakeBody.getP1());
-//                    System.out.println("Direction Down : " + snakeDirection.getPosation());
-                    snakeDirection.setDirectionDown(true);
-                    drawPanel.direction.add(snakeDirection);
-                }
+               
             }
             drawPanel.repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && drawPanel.getSnakeBody().isMoveLeft() == false) {
@@ -77,13 +58,7 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                 drawPanel.getSnakeBody().setMoveDown(false);
                 drawPanel.getSnakeBody().setMoveRight(true);
                 drawPanel.getSnakeBody().setMoveUP(false);
-                if (drawPanel.snakeBodyLength.size() > 1) {
-                    SnakeHeadDirection snakeDirection = new SnakeHeadDirection();
-                    snakeDirection.setPosation(drawPanel.snakeBody.getP1());
-//                    System.out.println("Direction Down : " + snakeDirection.getPosation());
-                    snakeDirection.setDirectionRigth(true);
-                    drawPanel.direction.add(snakeDirection);
-                }
+              
                 drawPanel.repaint();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {

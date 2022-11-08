@@ -10,26 +10,32 @@ import java.util.ArrayList;
 
 public class SnakeBody implements Cloneable {
 
-   
     private Point p1;
     private boolean moveUP = false;
     private boolean moveDown = false;
     private boolean moveLeft = false;
     private boolean moveRight = false;
+    DrawPanel drawPanel;
 
     public SnakeBody(DrawPanel drawPanel) {
-     
+        this.drawPanel = drawPanel;
         p1 = new Point();
     }
 
     public void drawBody(Graphics g) {
         g.setColor(Color.BLACK);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(6));
-        g.drawRect(getP1().x, getP1().y, 40, 40);
-        g.setColor(Color.red);
+//        Graphics2D g2d = (Graphics2D) g;
+//        g2d.setStroke(new BasicStroke(6));
+        //  g.drawRect(getP1().x, getP1().y, 40, 40);
+        if (this.equals(drawPanel.snakeBodyLength.get(0))) {
+            g.setColor(Color.black);
+        } else if (this.equals(drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.size() - 1)) && drawPanel.snakeBodyLength.size() > 1) {
+            g.setColor(Color.BLUE);
+        } else {
+            g.setColor(Color.red);
+        }
         g.fillRect(getP1().x, getP1().y, 40, 40);
-        g2d.setStroke(new BasicStroke(1));
+//        g2d.setStroke(new BasicStroke(1));
     }
 
     public Point getP1() {
