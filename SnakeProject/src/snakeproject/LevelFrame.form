@@ -46,8 +46,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="325" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jToggleButtonMedium" min="-2" pref="261" max="-2" attributes="0"/>
                       <Component id="jToggleButtonEasy" min="-2" pref="261" max="-2" attributes="0"/>
+                      <Component id="jToggleButtonMedium" min="-2" pref="261" max="-2" attributes="0"/>
                       <Component id="jToggleButtonHard" min="-2" pref="261" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="349" max="32767" attributes="0"/>
@@ -58,9 +58,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                  <Component id="jToggleButtonMedium" min="-2" pref="122" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                   <Component id="jToggleButtonEasy" min="-2" pref="122" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                  <Component id="jToggleButtonMedium" min="-2" pref="122" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="jToggleButtonHard" min="-2" pref="122" max="-2" attributes="0"/>
                   <EmptySpace pref="65" max="32767" attributes="0"/>
@@ -80,7 +80,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonHardActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="jToggleButtonMedium">
+        <Component class="javax.swing.JToggleButton" name="jToggleButtonEasy">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="36" style="1"/>
@@ -88,10 +88,10 @@
             <Property name="text" type="java.lang.String" value="Easy"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonMediumActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonEasyActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="jToggleButtonEasy">
+        <Component class="javax.swing.JToggleButton" name="jToggleButtonMedium">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="36" style="1"/>
@@ -99,7 +99,7 @@
             <Property name="text" type="java.lang.String" value="Medium"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonEasyActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonMediumActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

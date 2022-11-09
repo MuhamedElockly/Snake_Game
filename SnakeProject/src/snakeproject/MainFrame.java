@@ -5,6 +5,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         //  drawPanel1.setScorePanel(this.scorePanel1);
+        
         drawPanel1.addPropertyChangeListener(scorePanel1);
 
     }
@@ -97,4 +98,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private snakeproject.ScorePanel scorePanel1;
     // End of variables declaration//GEN-END:variables
+
+   
+    public snakeproject.DrawPanel getDrawPanel1() {
+        return drawPanel1;
+    }
+
+   
+    public void setDrawPanel1(snakeproject.DrawPanel drawPanel1) {
+        this.drawPanel1 = drawPanel1;
+    }
 }

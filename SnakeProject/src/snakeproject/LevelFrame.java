@@ -18,10 +18,10 @@ public class LevelFrame extends javax.swing.JFrame {
      */
     public LevelFrame() {
         initComponents();
-      
-//        setResizable(false);
-        jToggleButtonEasy.setBackground(Color.red);
+
+        setResizable(false);
         jToggleButtonMedium.setBackground(Color.red);
+        jToggleButtonEasy.setBackground(Color.red);
         jToggleButtonHard.setBackground(Color.red);
     }
 
@@ -36,8 +36,8 @@ public class LevelFrame extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jToggleButtonHard = new javax.swing.JToggleButton();
-        jToggleButtonMedium = new javax.swing.JToggleButton();
         jToggleButtonEasy = new javax.swing.JToggleButton();
+        jToggleButtonMedium = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,19 +51,19 @@ public class LevelFrame extends javax.swing.JFrame {
             }
         });
 
-        jToggleButtonMedium.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jToggleButtonMedium.setText("Easy");
-        jToggleButtonMedium.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonMediumActionPerformed(evt);
-            }
-        });
-
         jToggleButtonEasy.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jToggleButtonEasy.setText("Medium");
+        jToggleButtonEasy.setText("Easy");
         jToggleButtonEasy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonEasyActionPerformed(evt);
+            }
+        });
+
+        jToggleButtonMedium.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jToggleButtonMedium.setText("Medium");
+        jToggleButtonMedium.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonMediumActionPerformed(evt);
             }
         });
 
@@ -74,8 +74,8 @@ public class LevelFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(325, 325, 325)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButtonMedium, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButtonEasy, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonMedium, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButtonHard, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(349, Short.MAX_VALUE))
         );
@@ -83,9 +83,9 @@ public class LevelFrame extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(79, 79, 79)
-                .addComponent(jToggleButtonMedium, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
                 .addComponent(jToggleButtonEasy, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
+                .addComponent(jToggleButtonMedium, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(jToggleButtonHard, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(65, Short.MAX_VALUE))
@@ -105,22 +105,30 @@ public class LevelFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButtonMediumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMediumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButtonMediumActionPerformed
-
     private void jToggleButtonEasyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEasyActionPerformed
-       MainFrame mainFrame=new MainFrame();
-       mainFrame.setVisible(true);
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setVisible(true);
+        mainFrame.getDrawPanel1().setScore_Level(10);
+        mainFrame.getDrawPanel1().setLevel_Speed(250);
+        this.dispose();
     }//GEN-LAST:event_jToggleButtonEasyActionPerformed
 
+    private void jToggleButtonMediumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMediumActionPerformed
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setVisible(true);
+        mainFrame.getDrawPanel1().setScore_Level(20);
+        mainFrame.getDrawPanel1().setLevel_Speed(75);
+        this.dispose();
+    }//GEN-LAST:event_jToggleButtonMediumActionPerformed
+
     private void jToggleButtonHardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonHardActionPerformed
-        // TODO add your handling code here:
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setVisible(true);
+        mainFrame.getDrawPanel1().setScore_Level(30);
+        mainFrame.getDrawPanel1().setLevel_Speed(20);
+        this.dispose();
     }//GEN-LAST:event_jToggleButtonHardActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -159,4 +167,5 @@ public class LevelFrame extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButtonHard;
     private javax.swing.JToggleButton jToggleButtonMedium;
     // End of variables declaration//GEN-END:variables
+
 }

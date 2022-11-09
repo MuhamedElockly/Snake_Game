@@ -34,7 +34,7 @@ public class SnakeBody implements Cloneable {
         } else {
             g.setColor(Color.red);
         }
-        g.fillRect(getP1().x, getP1().y, 40, 40);
+        g.fillRect(getP1().x, getP1().y, DrawPanel.UNIT_SIZE, DrawPanel.UNIT_SIZE);
 //        g2d.setStroke(new BasicStroke(1));
     }
 

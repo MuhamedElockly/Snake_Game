@@ -18,9 +18,12 @@ import java.awt.event.*;
 public class DrawPanel extends javax.swing.JPanel implements Subject {
 
     int score = 0;
-    static final int SCREEN_WIDTH = 1920;
-    static final int SCREEN_HEIGHT = 920;
-    static final int UNIT_SIZE = 40;
+    static final int SCREEN_WIDTH = 1925;
+    static final int SCREEN_HEIGHT = 925;
+    public static final int UNIT_SIZE = 25;
+    private int Score_Level = 10;
+    private int Level_Speed = 100;
+
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
     // static final int DELAY = 175;
     final int x[] = new int[GAME_UNITS];
@@ -41,7 +44,7 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         listener = new ArrayList<>();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         timer = new Timer();
-        timer.scheduleAtFixedRate(new RemindTask(this), 1000, 150);
+        timer.scheduleAtFixedRate(new RemindTask(this), 1000, Level_Speed);
         setSize(new Dimension(800, 800));
 
         setBackground(Color.WHITE);
@@ -63,7 +66,11 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         }
         KeyboardFocusManager keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyManager.addKeyEventPostProcessor(new Keypoard_Events(this));
-
+        try {
+            snakeBodyLength.add((SnakeBody) snakeBodyLength.get(snakeBodyLength.size() - 1).clone());
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         repaint();
 
     }
@@ -87,10 +94,10 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i++) {
-            g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-            g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
-        }
+//        for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i++) {
+//            g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
+//            g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
+//        }
         for (int i = 0; i < snakeBodyLength.size(); i++) {
             snakeBodyLength.get(i).drawBody(g);
         }
@@ -128,7 +135,7 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     @Override
     public void notifyAllProperties() {
         for (int i = 0; i < listener.size(); i++) {
-            listener.get(i).update(Integer.toString(score * 10));
+            listener.get(i).update(Integer.toString(score * getScore_Level()));
         }
     }
 
@@ -226,10 +233,8 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
                 Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             score++;
-//            this.getScorePanel().setScore(Integer.toString(score * 10));
             notifyAllProperties();
             reInitalizeComponet();
-            
             repaint();
 
         }
@@ -241,6 +246,34 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    /**
+     * @return the Score_Level
+     */
+    public int getScore_Level() {
+        return Score_Level;
+    }
+
+    /**
+     * @param Score_Level the Score_Level to set
+     */
+    public void setScore_Level(int Score_Level) {
+        this.Score_Level = Score_Level;
+    }
+
+    /**
+     * @return the Level_Speed
+     */
+    public int getLevel_Speed() {
+        return Level_Speed;
+    }
+
+    /**
+     * @param Level_Speed the Level_Speed to set
+     */
+    public void setLevel_Speed(int Level_Speed) {
+        this.Level_Speed = Level_Speed;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
