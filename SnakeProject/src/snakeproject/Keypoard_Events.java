@@ -24,55 +24,62 @@ public class Keypoard_Events implements KeyEventPostProcessor {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT && drawPanel.getSnakeBody().isMoveRight() == false) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-                drawPanel.getSnakeBody().setMoveLeft(true);
-                drawPanel.getSnakeBody().setMoveDown(false);
-                drawPanel.getSnakeBody().setMoveRight(false);
-                drawPanel.getSnakeBody().setMoveUP(false);
-               
+                if (drawPanel.checkMove('L')) {
+                    drawPanel.setRunning(true);
+                    drawPanel.getSnakeBody().setMoveLeft(true);
+                    drawPanel.getSnakeBody().setMoveDown(false);
+                    drawPanel.getSnakeBody().setMoveRight(false);
+                    drawPanel.getSnakeBody().setMoveUP(false);
 
-                drawPanel.repaint();
+                    drawPanel.repaint();
+                }
             }
         } else if (e.getKeyCode() == KeyEvent.VK_UP && drawPanel.getSnakeBody().isMoveDown() == false) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-                drawPanel.getSnakeBody().setMoveLeft(false);
-                drawPanel.getSnakeBody().setMoveDown(false);
-                drawPanel.getSnakeBody().setMoveRight(false);
-                drawPanel.getSnakeBody().setMoveUP(true);
+                if (drawPanel.checkMove('U')) {
+                    drawPanel.setRunning(true);
+                    drawPanel.getSnakeBody().setMoveLeft(false);
+                    drawPanel.getSnakeBody().setMoveDown(false);
+                    drawPanel.getSnakeBody().setMoveRight(false);
+                    drawPanel.getSnakeBody().setMoveUP(true);
 
-                
+                }
             }
             drawPanel.repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN && drawPanel.getSnakeBody().isMoveUP() == false) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-                drawPanel.getSnakeBody().setMoveLeft(false);
-                drawPanel.getSnakeBody().setMoveDown(true);
-                drawPanel.getSnakeBody().setMoveRight(false);
-                drawPanel.getSnakeBody().setMoveUP(false);
+                if (drawPanel.checkMove('D')) {
+                    drawPanel.setRunning(true);
+                    drawPanel.getSnakeBody().setMoveLeft(false);
+                    drawPanel.getSnakeBody().setMoveDown(true);
+                    drawPanel.getSnakeBody().setMoveRight(false);
+                    drawPanel.getSnakeBody().setMoveUP(false);
 
-               
+                }
             }
             drawPanel.repaint();
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && drawPanel.getSnakeBody().isMoveLeft() == false) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-                drawPanel.getSnakeBody().setMoveLeft(false);
-                drawPanel.getSnakeBody().setMoveDown(false);
-                drawPanel.getSnakeBody().setMoveRight(true);
-                drawPanel.getSnakeBody().setMoveUP(false);
-              
-                drawPanel.repaint();
+                if (drawPanel.checkMove('R')) {
+                    drawPanel.setRunning(true);
+                    drawPanel.getSnakeBody().setMoveLeft(false);
+                    drawPanel.getSnakeBody().setMoveDown(false);
+                    drawPanel.getSnakeBody().setMoveRight(true);
+                    drawPanel.getSnakeBody().setMoveUP(false);
+                }
             }
+            drawPanel.repaint();
+
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
+
+                drawPanel.setRunning(false);
                 drawPanel.getSnakeBody().setMoveLeft(false);
                 drawPanel.getSnakeBody().setMoveDown(false);
                 drawPanel.getSnakeBody().setMoveRight(false);
                 drawPanel.getSnakeBody().setMoveUP(false);
-
-//            SnakeHeadDirection snakeDirection = new SnakeHeadDirection();
-//            snakeDirection.setPosation(drawPanel.snakeBody.getP1());
-//            snakeDirection.setDirectionLeft(true);
-//            drawPanel.direction.add(snakeDirection);
                 drawPanel.repaint();
+
             }
         }
         return true;

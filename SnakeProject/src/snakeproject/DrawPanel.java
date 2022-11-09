@@ -15,36 +15,35 @@ import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
 
-public class DrawPanel extends javax.swing.JPanel {
+public class DrawPanel extends javax.swing.JPanel implements Subject {
 
+    int score = 0;
     static final int SCREEN_WIDTH = 1920;
-    static final int SCREEN_HEIGHT = 1000;
+    static final int SCREEN_HEIGHT = 920;
     static final int UNIT_SIZE = 40;
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
     // static final int DELAY = 175;
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
 
+    ArrayList<PropertyChangeListener> listener;
     ArrayList<SnakeBody> snakeBodyLength;
-
+    private boolean running = true;
     public SnakeBody snakeBody;
     private Food food;
     Timer timer;
     int appleX;
     int appleY;
-    double ranX;
-    double ranY;
 
     public DrawPanel() {
 
         initComponents();
+        listener = new ArrayList<>();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         timer = new Timer();
-        timer.scheduleAtFixedRate(new RemindTask(this), 1000, 100);
+        timer.scheduleAtFixedRate(new RemindTask(this), 1000, 150);
         setSize(new Dimension(800, 800));
 
-        ranX = Math.random() * this.getWidth();
-        ranY = Math.random() * this.getHeight();
         setBackground(Color.WHITE);
         snakeBody = new SnakeBody(this);
         //  snakeBody.setP1(new Point(this.x.length / 2, this.y.length / 2));
@@ -55,7 +54,7 @@ public class DrawPanel extends javax.swing.JPanel {
 
         food.setP1(new Point((int) appleX, (int) appleY));
         snakeBodyLength = new ArrayList<>();
-   
+
         snakeBodyLength.add(snakeBody);
         try {
             this.temp3 = (SnakeBody) snakeBody.clone();
@@ -64,6 +63,7 @@ public class DrawPanel extends javax.swing.JPanel {
         }
         KeyboardFocusManager keyManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         keyManager.addKeyEventPostProcessor(new Keypoard_Events(this));
+
         repaint();
 
     }
@@ -115,36 +115,89 @@ public class DrawPanel extends javax.swing.JPanel {
     SnakeBody temp3;
     int counter = 0;
 
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+        listener.add(propertyChangeListener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+        listener.remove(propertyChangeListener);
+    }
+
+    @Override
+    public void notifyAllProperties() {
+        for (int i = 0; i < listener.size(); i++) {
+            listener.get(i).update(Integer.toString(score * 10));
+        }
+    }
+
     class RemindTask extends TimerTask {
 
-        DrawPanel drawPanel;
+        private DrawPanel drawPanel;
 
         public RemindTask(DrawPanel drawPanel) {
             this.drawPanel = drawPanel;
         }
 
         public void run() {
-            moveAllBody();
+            if (isRunning() == true) {
+                moveAllBody();
+            }
             eatFood();
-           
+            if (x[0] > (SCREEN_WIDTH)) {
+                x[0] = 0;
+            } else if (x[0] < 0) {
+                x[0] = SCREEN_WIDTH;
+            } else if (y[0] > SCREEN_HEIGHT) {
+                y[0] = 0;
+            } else if (y[0] < 0) {
+                y[0] = SCREEN_HEIGHT;
+            }
+
             repaint();
         }
+
+        public DrawPanel getDrawPanel() {
+            return drawPanel;
+        }
+
+        public void setDrawPanel(DrawPanel drawPanel) {
+            this.drawPanel = drawPanel;
+        }
+    }
+
+    public boolean checkMove(char ch) {
+        if (ch == 'D') {
+            if ((x[0] == x[1] && y[0] < y[1]) && y[0] < SCREEN_HEIGHT) {
+                return false;
+            }
+        } else if (ch == 'U') {
+            if ((x[0] == x[1] && y[0] > y[1]) && y[0] > 0) {
+                return false;
+            }
+        } else if (ch == 'L') {
+            if ((y[0] == y[1] && x[0] > x[1]) && x[0] < SCREEN_WIDTH) {
+                return false;
+            }
+        } else if (ch == 'R') {
+            if ((y[0] == y[1] && x[0] < x[1]) && x[0] > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void reInitalizeComponet() {
         appleX = (int) ((int) (Math.random() * SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
         appleY = (int) ((int) (Math.random() * SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
-
         food.setP1(new Point((int) appleX, (int) appleY));
-
-        //  modifySnakeBody();
     }
 
     public void moveAllBody() {
         for (int i = snakeBodyLength.size(); i > 0; i--) {
             x[i] = x[i - 1];
             y[i] = y[i - 1];
-
         }
         if (snakeBody.isMoveUP()) {
             y[0] = y[0] - UNIT_SIZE;
@@ -167,29 +220,27 @@ public class DrawPanel extends javax.swing.JPanel {
     public void eatFood() {
 
         if ((x[0] == food.getP1().x) && (y[0] == food.getP1().y)) {
-            System.out.println("Yess");
             try {
                 snakeBodyLength.add((SnakeBody) snakeBodyLength.get(snakeBodyLength.size() - 1).clone());
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+            score++;
+//            this.getScorePanel().setScore(Integer.toString(score * 10));
+            notifyAllProperties();
             reInitalizeComponet();
+            
             repaint();
-        }
 
-//        if (getSnakeBody().getP1().x > getFood().getP1().x && getSnakeBody().getP1().x < getFood().getP1().x + 30) {
-//            if (getSnakeBody().getP1().y > getFood().getP1().y && getSnakeBody().getP1().y < getFood().getP1().y + 30) {
-//                reInitalizeComponet();
-//            } else if (getSnakeBody().getP1().y + 40 > getFood().getP1().y && getSnakeBody().getP1().y + 40 < getFood().getP1().y + 30) {
-//                reInitalizeComponet();
-//            }
-//        } else if (getSnakeBody().getP1().x + 40 > getFood().getP1().x && getSnakeBody().getP1().x + 40 < getFood().getP1().x + 30) {
-//            if (getSnakeBody().getP1().y > getFood().getP1().y && getSnakeBody().getP1().y < getFood().getP1().y + 30) {
-//                reInitalizeComponet();
-//            } else if (getSnakeBody().getP1().y + 40 > getFood().getP1().y && getSnakeBody().getP1().y + 40 < getFood().getP1().y + 30) {
-//                reInitalizeComponet();
-//            }
-//        }
+        }
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
