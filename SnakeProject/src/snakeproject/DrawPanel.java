@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class DrawPanel extends javax.swing.JPanel implements Subject {
 
@@ -21,7 +24,7 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     static final int SCREEN_WIDTH = 1925;
     static final int SCREEN_HEIGHT = 925;
     public static final int UNIT_SIZE = 25;
-    private int Score_Level = 10;
+    private int levelScore = 10;
     private int Level_Speed = 100;
 
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
@@ -37,14 +40,16 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     Timer timer;
     int appleX;
     int appleY;
+    Sounds sounds;
 
     public DrawPanel() {
 
         initComponents();
+
         listener = new ArrayList<>();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         timer = new Timer();
-        timer.scheduleAtFixedRate(new RemindTask(this), 1000, Level_Speed);
+        sounds = new Sounds();
         setSize(new Dimension(800, 800));
 
         setBackground(Color.WHITE);
@@ -52,10 +57,11 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         //  snakeBody.setP1(new Point(this.x.length / 2, this.y.length / 2));
         food = new Food(this);
 
-        appleX = (int) ((int) (Math.random() * SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
-        appleY = (int) ((int) (Math.random() * SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
-
-        food.setP1(new Point((int) appleX, (int) appleY));
+//        appleX = (int) ((int) (Math.random() * SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
+//        appleY = (int) ((int) (Math.random() * SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
+//
+//        food.setP1(new Point((int) appleX, (int) appleY));
+        reInitalizeComponet();
         snakeBodyLength = new ArrayList<>();
 
         snakeBodyLength.add(snakeBody);
@@ -71,7 +77,7 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        repaint();
+//        repaint();
 
     }
 
@@ -102,6 +108,21 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
             snakeBodyLength.get(i).drawBody(g);
         }
         getFood().drawBody(g);
+    }
+
+    public void startGame(int speed, int levelScore) {
+        timer.scheduleAtFixedRate(new RemindTask(this), 1000, speed);
+        this.levelScore = levelScore;
+        try {
+            sounds.startBackgroundSound();
+            repaint();
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public SnakeBody getSnakeBody() {
@@ -135,7 +156,7 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     @Override
     public void notifyAllProperties() {
         for (int i = 0; i < listener.size(); i++) {
-            listener.get(i).update(Integer.toString(score * getScore_Level()));
+            listener.get(i).update(Integer.toString(score * getLevelScore()));
         }
     }
 
@@ -196,8 +217,22 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     }
 
     public void reInitalizeComponet() {
-        appleX = (int) ((int) (Math.random() * SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
-        appleY = (int) ((int) (Math.random() * SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
+
+        appleX = (int) ((int) (Math.random() * (SCREEN_WIDTH - UNIT_SIZE) / UNIT_SIZE)) * UNIT_SIZE;
+        appleY = (int) ((int) (Math.random() * (SCREEN_HEIGHT - UNIT_SIZE) / UNIT_SIZE)) * UNIT_SIZE;
+        System.out.println(appleX);
+
+        if (appleX == 1) {
+            appleX = 25;
+            if (appleY == 1) {
+                appleY = 25;
+            }
+        } else if (appleX == SCREEN_WIDTH - UNIT_SIZE) {
+            appleX = SCREEN_WIDTH - 2 * UNIT_SIZE;
+            if (appleY == SCREEN_HEIGHT - UNIT_SIZE) {
+                appleY = SCREEN_HEIGHT - 2 * UNIT_SIZE;
+            }
+        }
         food.setP1(new Point((int) appleX, (int) appleY));
     }
 
@@ -235,6 +270,15 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
             score++;
             notifyAllProperties();
             reInitalizeComponet();
+            try {
+                sounds.startEatSound();
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
             repaint();
 
         }
@@ -251,15 +295,15 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     /**
      * @return the Score_Level
      */
-    public int getScore_Level() {
-        return Score_Level;
+    public int getLevelScore() {
+        return levelScore;
     }
 
     /**
      * @param Score_Level the Score_Level to set
      */
-    public void setScore_Level(int Score_Level) {
-        this.Score_Level = Score_Level;
+    public void setLevelScore(int levelScore) {
+        this.levelScore = levelScore;
     }
 
     /**
