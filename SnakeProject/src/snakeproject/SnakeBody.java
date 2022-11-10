@@ -23,7 +23,7 @@ public class SnakeBody implements Cloneable {
     }
 
     public void drawBody(Graphics g) {
-        g.setColor(Color.BLACK);
+        //   g.setColor(Color.BLACK);
 //        Graphics2D g2d = (Graphics2D) g;
 //        g2d.setStroke(new BasicStroke(6));
         //  g.drawRect(getP1().x, getP1().y, 40, 40);
@@ -32,7 +32,8 @@ public class SnakeBody implements Cloneable {
         } else if (this.equals(drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.size() - 1)) && drawPanel.snakeBodyLength.size() > 1) {
             g.setColor(Color.BLUE);
         } else {
-            g.setColor(Color.red);
+            checkCorner(g);
+//            g.setColor(Color.red);
         }
         g.fillRect(getP1().x, getP1().y, DrawPanel.UNIT_SIZE, DrawPanel.UNIT_SIZE);
 //        g2d.setStroke(new BasicStroke(1));
@@ -76,6 +77,38 @@ public class SnakeBody implements Cloneable {
 
     public void setMoveRight(boolean moveRight) {
         this.moveRight = moveRight;
+    }
+
+    public void checkCorner(Graphics g) {
+        if ((drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) - 1).getP1().x == this.getP1().x + DrawPanel.UNIT_SIZE) && (drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) - 1).getP1().y == this.getP1().y)) {
+            if ((drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) + 1).getP1().x == this.getP1().x) && (drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) + 1).getP1().y == this.getP1().y + DrawPanel.UNIT_SIZE)) {
+                //Down To Up Right
+                g.setColor(Color.GREEN);
+            } else if ((drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) + 1).getP1().x == this.getP1().x) && (drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) + 1).getP1().y == this.getP1().y - DrawPanel.UNIT_SIZE)) {
+                //Up To Down Right
+                g.setColor(Color.ORANGE);
+            } else {
+                g.setColor(Color.RED);
+
+            }
+        } else if ((drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) + 1).getP1().x == this.getP1().x + DrawPanel.UNIT_SIZE) && (drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) + 1).getP1().y == this.getP1().y)) {
+//          System.out.println("fdfff");
+            if ((drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) - 1).getP1().x == this.getP1().x) && (drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) - 1).getP1().y == this.getP1().y + DrawPanel.UNIT_SIZE)) {
+                //Right Up To Down 
+                g.setColor(Color.GREEN);
+//                 System.out.println("yarab");
+            } else if ((drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) - 1).getP1().x == this.getP1().x) && (drawPanel.snakeBodyLength.get(drawPanel.snakeBodyLength.indexOf(this) - 1).getP1().y == this.getP1().y - DrawPanel.UNIT_SIZE)) {
+                //Right Down To Up 
+                g.setColor(Color.yellow);
+//                 System.out.println("yarab");
+            } else {
+//                System.out.println("fdfff");
+                g.setColor(Color.RED);
+            }
+        } else {
+            g.setColor(Color.RED);
+        }
+
     }
 
     @Override

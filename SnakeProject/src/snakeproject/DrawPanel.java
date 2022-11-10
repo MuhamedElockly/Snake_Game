@@ -220,11 +220,11 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
 
         appleX = (int) ((int) (Math.random() * (SCREEN_WIDTH - UNIT_SIZE) / UNIT_SIZE)) * UNIT_SIZE;
         appleY = (int) ((int) (Math.random() * (SCREEN_HEIGHT - UNIT_SIZE) / UNIT_SIZE)) * UNIT_SIZE;
-        System.out.println(appleX);
+      
 
-        if (appleX == 1) {
+        if (appleX == 0) {
             appleX = 25;
-            if (appleY == 1) {
+            if (appleY == 0) {
                 appleY = 25;
             }
         } else if (appleX == SCREEN_WIDTH - UNIT_SIZE) {
