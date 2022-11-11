@@ -21,13 +21,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class DrawPanel extends javax.swing.JPanel implements Subject {
 
     int score = 0;
-    static final int SCREEN_WIDTH = 1925;
-    static final int SCREEN_HEIGHT = 925;
-    public static final int UNIT_SIZE = 25;
+    static final int SCREEN_WIDTH = 1650;
+    static final int SCREEN_HEIGHT = 800;
+    public static final int UNIT_SIZE = 50;
     private int levelScore = 10;
     private int Level_Speed = 100;
 
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
+//     int GAME_UNITS = ( this.getWidth()* this.getHeight()) / (UNIT_SIZE * UNIT_SIZE);
     // static final int DELAY = 175;
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
@@ -47,13 +48,14 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         initComponents();
 
         listener = new ArrayList<>();
-        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        //     this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         timer = new Timer();
         sounds = new Sounds();
-        setSize(new Dimension(800, 800));
+        // setSize(new Dimension(800, 800));
 
         setBackground(Color.WHITE);
         snakeBody = new SnakeBody(this);
+//        snakeBody.setMoveRight(true);
         //  snakeBody.setP1(new Point(this.x.length / 2, this.y.length / 2));
         food = new Food(this);
 
@@ -77,7 +79,15 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        repaint();
+        try {
+            snakeBodyLength.add((SnakeBody) snakeBodyLength.get(snakeBodyLength.size() - 1).clone());
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //  x[0]=3*UNIT_SIZE;
+        // y[0]=3*UNIT_SIZE;
+
+        repaint();
 
     }
 
@@ -173,16 +183,15 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
                 moveAllBody();
             }
             eatFood();
-            if (x[0] > (SCREEN_WIDTH)) {
+            if (x[0] == (SCREEN_WIDTH)) {
                 x[0] = 0;
             } else if (x[0] < 0) {
                 x[0] = SCREEN_WIDTH;
-            } else if (y[0] > SCREEN_HEIGHT) {
+            } else if (y[0] == SCREEN_HEIGHT) {
                 y[0] = 0;
             } else if (y[0] < 0) {
                 y[0] = SCREEN_HEIGHT;
             }
-
             repaint();
         }
 
@@ -220,12 +229,11 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
 
         appleX = (int) ((int) (Math.random() * (SCREEN_WIDTH - UNIT_SIZE) / UNIT_SIZE)) * UNIT_SIZE;
         appleY = (int) ((int) (Math.random() * (SCREEN_HEIGHT - UNIT_SIZE) / UNIT_SIZE)) * UNIT_SIZE;
-      
 
         if (appleX == 0) {
-            appleX = 25;
+            appleX = UNIT_SIZE;
             if (appleY == 0) {
-                appleY = 25;
+                appleY = UNIT_SIZE;
             }
         } else if (appleX == SCREEN_WIDTH - UNIT_SIZE) {
             appleX = SCREEN_WIDTH - 2 * UNIT_SIZE;

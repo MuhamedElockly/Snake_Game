@@ -16,12 +16,6 @@ public class Keypoard_Events implements KeyEventPostProcessor {
 
     @Override
     public boolean postProcessKeyEvent(KeyEvent e) {
-//        try {
-//            drawPanel.temp3 = (SnakeBody) drawPanel.snakeBodyLength.get(0).clone();
-//        } catch (CloneNotSupportedException ex) {
-//            Logger.getLogger(DrawPanel.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
         if (e.getKeyCode() == KeyEvent.VK_LEFT && drawPanel.getSnakeBody().isMoveRight() == false) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
                 if (drawPanel.checkMove('L')) {
@@ -30,7 +24,6 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                     drawPanel.getSnakeBody().setMoveDown(false);
                     drawPanel.getSnakeBody().setMoveRight(false);
                     drawPanel.getSnakeBody().setMoveUP(false);
-
                     drawPanel.repaint();
                 }
             }
@@ -42,7 +35,6 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                     drawPanel.getSnakeBody().setMoveDown(false);
                     drawPanel.getSnakeBody().setMoveRight(false);
                     drawPanel.getSnakeBody().setMoveUP(true);
-
                 }
             }
             drawPanel.repaint();
@@ -54,7 +46,6 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                     drawPanel.getSnakeBody().setMoveDown(true);
                     drawPanel.getSnakeBody().setMoveRight(false);
                     drawPanel.getSnakeBody().setMoveUP(false);
-
                 }
             }
             drawPanel.repaint();
@@ -69,10 +60,8 @@ public class Keypoard_Events implements KeyEventPostProcessor {
                 }
             }
             drawPanel.repaint();
-
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-
                 drawPanel.setRunning(false);
                 drawPanel.getSnakeBody().setMoveLeft(false);
                 drawPanel.getSnakeBody().setMoveDown(false);

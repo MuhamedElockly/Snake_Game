@@ -1,12 +1,23 @@
 package snakeproject;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.JComponent;
+
 public class MainFrame extends javax.swing.JFrame {
 
     public MainFrame() {
         initComponents();
         //  drawPanel1.setScorePanel(this.scorePanel1);
-        
-        drawPanel1.addPropertyChangeListener(scorePanel1);
+       // this.pack();
+           this.setPreferredSize(new Dimension(1920, 1080));
+        drawPanel2.addPropertyChangeListener(scorePanel2);
+        getContentPane().setBackground(Color.YELLOW);
+//      drawPanel1.setBounds(WIDTH, WIDTH, WIDTH, HEIGHT);
+//       drawPanel1.setAlignmentX(JComponent.TOP_ALIGNMENT);
 
     }
 
@@ -14,47 +25,58 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        drawPanel1 = new snakeproject.DrawPanel();
-        scorePanel1 = new snakeproject.ScorePanel();
+        backgroundPanel1 = new snakeproject.BackgroundPanel();
+        drawPanel2 = new snakeproject.DrawPanel();
+        scorePanel2 = new snakeproject.ScorePanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
-        javax.swing.GroupLayout drawPanel1Layout = new javax.swing.GroupLayout(drawPanel1);
-        drawPanel1.setLayout(drawPanel1Layout);
-        drawPanel1Layout.setHorizontalGroup(
-            drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1952, Short.MAX_VALUE)
+        drawPanel2.setPreferredSize(new java.awt.Dimension(1650, 800));
+
+        javax.swing.GroupLayout drawPanel2Layout = new javax.swing.GroupLayout(drawPanel2);
+        drawPanel2.setLayout(drawPanel2Layout);
+        drawPanel2Layout.setHorizontalGroup(
+            drawPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1650, Short.MAX_VALUE)
         );
-        drawPanel1Layout.setVerticalGroup(
-            drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 914, Short.MAX_VALUE)
+        drawPanel2Layout.setVerticalGroup(
+            drawPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
 
-        scorePanel1.setBackground(new java.awt.Color(102, 255, 51));
+        scorePanel2.setBackground(new java.awt.Color(0, 255, 51));
+
+        javax.swing.GroupLayout backgroundPanel1Layout = new javax.swing.GroupLayout(backgroundPanel1);
+        backgroundPanel1.setLayout(backgroundPanel1Layout);
+        backgroundPanel1Layout.setHorizontalGroup(
+            backgroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(scorePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanel1Layout.createSequentialGroup()
+                .addContainerGap(149, Short.MAX_VALUE)
+                .addComponent(drawPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(120, 120, 120))
+        );
+        backgroundPanel1Layout.setVerticalGroup(
+            backgroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundPanel1Layout.createSequentialGroup()
+                .addComponent(scorePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(drawPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(226, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 1417, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(scorePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1952, Short.MAX_VALUE)))
+            .addComponent(backgroundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1919, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scorePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 914, Short.MAX_VALUE))
+            .addComponent(backgroundPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1132, Short.MAX_VALUE)
         );
 
         pack();
@@ -94,18 +116,16 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private snakeproject.DrawPanel drawPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private snakeproject.ScorePanel scorePanel1;
+    private snakeproject.BackgroundPanel backgroundPanel1;
+    private snakeproject.DrawPanel drawPanel2;
+    private snakeproject.ScorePanel scorePanel2;
     // End of variables declaration//GEN-END:variables
 
-   
     public snakeproject.DrawPanel getDrawPanel1() {
-        return drawPanel1;
+        return drawPanel2;
     }
 
-   
     public void setDrawPanel1(snakeproject.DrawPanel drawPanel1) {
-        this.drawPanel1 = drawPanel1;
+        this.drawPanel2 = drawPanel1;
     }
 }
