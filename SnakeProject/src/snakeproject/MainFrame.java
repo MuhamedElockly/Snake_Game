@@ -7,14 +7,15 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JComponent;
 
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements PropertyChangeListener {
 
     public MainFrame() {
         initComponents();
         //  drawPanel1.setScorePanel(this.scorePanel1);
-       // this.pack();
-           this.setPreferredSize(new Dimension(1920, 1080));
+        // this.pack();
+        this.setPreferredSize(new Dimension(1920, 1080));
         drawPanel2.addPropertyChangeListener(scorePanel2);
+        drawPanel2.addPropertyChangeListener(this);
         getContentPane().setBackground(Color.YELLOW);
 //      drawPanel1.setBounds(WIDTH, WIDTH, WIDTH, HEIGHT);
 //       drawPanel1.setAlignmentX(JComponent.TOP_ALIGNMENT);
@@ -127,5 +128,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void setDrawPanel1(snakeproject.DrawPanel drawPanel1) {
         this.drawPanel2 = drawPanel1;
+    }
+
+    @Override
+    public void update(Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void close() {
+
+        this.dispose();
+     
+      
     }
 }

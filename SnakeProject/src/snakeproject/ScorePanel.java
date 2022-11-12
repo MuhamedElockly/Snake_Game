@@ -66,4 +66,9 @@ public class ScorePanel extends javax.swing.JPanel implements PropertyChangeList
     public void update(Object object) {
         jTextField1.setText((String) object);
     }
+
+    @Override
+    public void close() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -92,7 +92,7 @@ public class LevelFrame extends javax.swing.JFrame {
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.setVisible(true);
-        mainFrame.getDrawPanel1().startGame(200, 10);
+        mainFrame.getDrawPanel1().startGame(1);
         this.dispose();
     }//GEN-LAST:event_jToggleButtonEasyActionPerformed
 
@@ -100,7 +100,7 @@ public class LevelFrame extends javax.swing.JFrame {
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.setVisible(true);
-        mainFrame.getDrawPanel1().startGame(100, 20);
+        mainFrame.getDrawPanel1().startGame(2);
         this.dispose();
     }//GEN-LAST:event_jToggleButtonMediumActionPerformed
 
@@ -108,7 +108,7 @@ public class LevelFrame extends javax.swing.JFrame {
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.setVisible(true);
-        mainFrame.getDrawPanel1().startGame(50, 30);
+        mainFrame.getDrawPanel1().startGame(3);
         this.dispose();
     }//GEN-LAST:event_jToggleButtonHardActionPerformed
 

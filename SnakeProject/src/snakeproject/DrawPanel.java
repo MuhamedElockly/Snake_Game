@@ -20,6 +20,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class DrawPanel extends javax.swing.JPanel implements Subject {
 
+    /**
+     * @return the level
+     */
+    public int getLevel() {
+        return level;
+    }
+
+    /**
+     * @param level the level to set
+     */
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     int score = 0;
     static final int SCREEN_WIDTH = 1650;
     static final int SCREEN_HEIGHT = 800;
@@ -42,6 +56,8 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     int appleX;
     int appleY;
     Sounds sounds;
+    private int level = 1;
+    boolean gameOver = false;
 
     public DrawPanel() {
 
@@ -118,9 +134,22 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
             snakeBodyLength.get(i).drawBody(g);
         }
         getFood().drawBody(g);
+
     }
 
-    public void startGame(int speed, int levelScore) {
+    public void startGame(int level) {
+        int speed = 0;
+        this.setLevel(level);
+        if (level == 1) {
+            speed = 200;
+            this.levelScore = 10;
+        } else if (level == 2) {
+            speed = 100;
+            this.levelScore = 20;
+        } else if (level == 3) {
+            speed = 50;
+            this.levelScore = 30;
+        }
         timer.scheduleAtFixedRate(new RemindTask(this), 1000, speed);
         this.levelScore = levelScore;
         try {
@@ -166,7 +195,12 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
     @Override
     public void notifyAllProperties() {
         for (int i = 0; i < listener.size(); i++) {
-            listener.get(i).update(Integer.toString(score * getLevelScore()));
+
+            if (listener.get(i) instanceof MainFrame && gameOver == true) {
+                listener.get(i).close();
+            } else if (!(listener.get(i) instanceof MainFrame)) {
+                listener.get(i).update(Integer.toString(score * getLevelScore()));
+            }
         }
     }
 
@@ -181,6 +215,9 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
         public void run() {
             if (isRunning() == true) {
                 moveAllBody();
+                if (snakeBodyLength.size() > 3) {
+                    checkCollisions();
+                }
             }
             eatFood();
             if (x[0] == (SCREEN_WIDTH)) {
@@ -242,6 +279,45 @@ public class DrawPanel extends javax.swing.JPanel implements Subject {
             }
         }
         food.setP1(new Point((int) appleX, (int) appleY));
+    }
+
+    public void gameOver() {
+        this.gameOver = true;
+        new GameOverFrame(this).setVisible(true);
+        notifyAllProperties();
+        sounds.pauseSound();
+
+    }
+
+    public void checkCollisions() {
+        //checks if head collides with body
+        for (int i = snakeBodyLength.size(); i > 0; i--) {
+            if ((x[0] == x[i]) && (y[0] == y[i])) {
+                running = false;
+                gameOver();
+
+            }
+        }
+//        //check if head touches left border
+//        if (x[0] < 0) {
+//            running = false;
+//        }
+//        //check if head touches right border
+//        if (x[0] > SCREEN_WIDTH) {
+//            running = false;
+//        }
+//        //check if head touches top border
+//        if (y[0] < 0) {
+//            running = false;
+//        }
+//        //check if head touches bottom border
+//        if (y[0] > SCREEN_HEIGHT) {
+//            running = false;
+//        }
+//
+//        if (!running) {
+//            timer.cancel();
+//        }
     }
 
     public void moveAllBody() {
